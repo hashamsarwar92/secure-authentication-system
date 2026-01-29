@@ -1,6 +1,52 @@
-## Step 1
+# Firebase Authentication System for Next.js
 
-To setup Firebase in your project we need to install both server-side and client-side packages:
+A complete, production-ready authentication system built with Next.js 16, Firebase (client & admin), and TypeScript. This system provides secure user authentication with protected routes, session management, and password reset functionality.
+
+---
+
+## 📋 Table of Contents
+
+1. [Features](#features)
+2. [Prerequisites](#prerequisites)
+3. [Installation & Setup](#installation--setup)
+4. [Required Files & Folder Structure](#required-files--folder-structure)
+5. [Environment Configuration](#environment-configuration)
+6. [How It Works](#how-it-works)
+7. [Usage Guide](#usage-guide)
+8. [Customization](#customization)
+9. [Security Best Practices](#security-best-practices)
+
+---
+
+## ✨ Features
+
+- ✅ **User Sign Up & Sign In** with Firebase Authentication
+- ✅ **Password Reset** functionality
+- ✅ **Protected Routes** with middleware
+- ✅ **Secure Session Management** using HttpOnly cookies
+- ✅ **Server-Side & Client-Side** Firebase integration
+- ✅ **Type-Safe Forms** with Zod validation
+- ✅ **Modern UI Components** with Shadcn/ui
+- ✅ **Role-Based Access** (User/Admin support)
+
+---
+
+## 🔧 Prerequisites
+
+Before integrating this authentication system, ensure you have:
+
+1. **Next.js 15+** project (App Router)
+2. **TypeScript** configured
+3. **Tailwind CSS** installed
+4. **Firebase Project** created at [Firebase Console](https://console.firebase.google.com/)
+
+---
+
+## 📦 Installation & Setup
+
+### Step 1: Install Dependencies
+
+Install all required packages with a single command:
 
 ```bash
 npm install firebase-admin
@@ -25,6 +71,9 @@ Validate frontend forms or backend API requests, ensures consistent and safe dat
 
 ```bash
 npx shadcn@latest init
+npx shadcn@latest add button
+npx shadcn@latest add form
+npx shadcn@latest add input
 ```
 # Purpose: 
 Tailwind CSS-based component library.
@@ -75,27 +124,37 @@ Integrates react-hook-form with validation libraries like Zod, Yup, Joi, etc.
 # Use case: 
 Allows you to do schema-based validation using zodResolver.
 
+# Single Command to install all dependency
+
+```bash 
+npm install firebase-admin firebase zod axios lucide-react usehooks-ts react-hook-form @hookform/resolvers 
+```
 ## Step 2
 
-Go to firebase website and create new project or open existing project
-in order to integrate firebase services into [project]
-firebase console -> project settings -> service Account -> generate new key -> paste dowlaoded file in root directory of the project and name it serviceAccount.json
-
-**❗ NOTE:** Your private key gives access to your project's Firebase services. Keep it confidential and never store it in a public repository so add firebase/serviceAccount.json in gitignore
-
-Add "resolveJsonModule": true in your tsconfig.json if not already:
+Setup your .env.local
 ```bash
-{
-  "compilerOptions": 
-  {
-    ...,
-    "resolveJsonModule": true,
-    "esModuleInterop": true
-  }
-}
-```
-This allows TypeScript to import JSON files like modules.
+# --- PUBLIC CLIENT SDK (Safe for browser) ---
+NEXT_PUBLIC_FIREBASE_API_KEY="your-api-key"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-project-id"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="123456789"
+NEXT_PUBLIC_FIREBASE_APP_ID="1:123456789:web:abcdef"
 
-## Step 3
-Install zod
+# --- PRIVATE ADMIN SDK (Server-side only) ---
+# Get these from: Project Settings -> Service Accounts -> Generate New Private Key
+FIREBASE_PROJECT_ID="your-project-id"
+FIREBASE_CLIENT_EMAIL="firebase-client-email"
+# Note: Ensure the private key is wrapped in quotes and includes the \n characters
+FIREBASE_PRIVATE_KEY="firebase-private-key"
+```
+
+# Firebase Client Initialization firebase/firebase-client.ts 
+Go to your firebase project setting -> General and get client keys
+# Firebase Admin Initialization firebase/firebase-admin.ts 
+Go to your firebase project setting -> sevice account and download privatekey.json and then copy admin keys from it and paste in .env.local
+
+**❗ NOTE:** Keep you admin key secure and private
+
+
 

@@ -1,0 +1,6 @@
+export interface AuthResponse<T = any> {
+  success: boolean;
+  message: string;
+  status: number;
+  data?: T;
+}
